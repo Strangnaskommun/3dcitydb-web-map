@@ -125,7 +125,7 @@
 
         var button = document.getElementById("gpsButton");
         button.className = "cesium-button cesium-toolbar-button tracking-deactivated";
-        button.title = "View GPS (single-click: one time, double-click: real-time)";
+        button.title = "Aktivera GNSS (ett klick: visa din positon, dubbelklick: realtidsuppdatering)";
 
         // replace the 3D/2D button with this GPS button
         var customCesiumViewerToolbar = document.getElementsByClassName("cesium-viewer-toolbar")[0];
@@ -290,6 +290,7 @@
         }
 
         function showPosition(position) {
+            var cesiumCamera = cesiumViewer.scene.camera;
             getLocation();
 
             function getLocation() {
@@ -368,7 +369,7 @@
                     oriGamma = 0;
                     oriHeight = 150;
                 }
-
+                
                 cesiumCamera.flyTo({
                     destination: Cesium.Cartesian3.fromDegrees(position.coords.longitude, position.coords.latitude, oriHeight),
                     orientation: {

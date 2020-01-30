@@ -192,7 +192,7 @@ function openSplashWindow() {
 function getSplashWindowFromUrl() {
     var tmp_url = "";
     var tmp_showOnStart = "";
-    var default_url = "splash/SplashWindow.html";
+    var default_url = "../3dcitywebclient/splash/SplashWindow.html";
     var default_showOnStart = "true";
 
     var ignoreSplashWindow_cookie = getCookie("ignoreSplashWindow");
