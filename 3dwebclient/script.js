@@ -35,9 +35,6 @@ if (Cesium.defined(bingToken) && bingToken !== "") {
     Cesium.BingMapsApi.defaultKey = bingToken;
 }
 
-// Token for Ion terrain server
-Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlZGZhN2I1Ny05M2ZjLTQ5ZjUtODI4Ni1iZTcwNzliODZlYjkiLCJpZCI6MTY0NTAsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzA1NTc4NzZ9.MlOc_gywhKm5JgofcDeE59P0seR6_M6RHaa8mwgcWjM';
-
 // Define clock to be animated per default
 var clock = new Cesium.Clock({
     shouldAnimate: true
@@ -48,7 +45,7 @@ var shadows = CitydbUtil.parse_query_string('shadows', window.location.href);
 var terrainShadows = CitydbUtil.parse_query_string('terrainShadows', window.location.href);
 
 // Set coordinates for homebutton
-var extent = Cesium.Rectangle.fromDegrees(16.65887, 59.14550, 17.47438, 59.56503);
+var extent = Cesium.Rectangle.fromDegrees(17.02350, 59.37313, 17.04289, 59.37814);
 Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
 Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 
@@ -111,10 +108,10 @@ adjustIonFeatures();
 // No need for navigation as for now
 // navigationInitialization('cesiumContainer', cesiumViewer);
 
-// Init camera view @ domkyrkan Strängnäs
+// Init camera view @ Strängnäs stad
 var startpositionCamera = cesiumViewer.camera;
 startpositionCamera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 1600.0),
+    destination: Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 1000.0),
     orientation: {
         // heading : Cesium.Math.toRadians(0.0),
         // pitch: Cesium.Math.toRadians(-45.0),
