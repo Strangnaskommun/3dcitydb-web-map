@@ -340,7 +340,8 @@ function intiClient() {
     flatpickr(clockElement, {
         enableTime: true,
         defaultDate: Cesium.JulianDate.toDate(cesiumViewer.clock.currentTime),
-        enableSeconds: true
+        enableSeconds: false,
+        disableMobile: "true"
     });
     clockElement.addEventListener("change", function () {
         var dateValue = clockElement.value;
