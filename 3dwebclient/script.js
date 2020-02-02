@@ -341,7 +341,7 @@ function intiClient() {
         enableTime: true,
         defaultDate: Cesium.JulianDate.toDate(cesiumViewer.clock.currentTime),
         enableSeconds: false,
-        disableMobile: "true"
+        disableMobile: true
     });
     clockElement.addEventListener("change", function () {
         var dateValue = clockElement.value;
