@@ -1472,6 +1472,11 @@ function thematicDataSourceAndTableTypeDropdownOnchange() {
 var mobileController = new MobileController();
 
 
+var userAgentString = navigator.userAgent;
+var IExplorerAgent = userAgentString.indexOf("MSIE") > -1 || userAgentString.indexOf("rv:") > -1;
+if (IExplorerAgent) {
+    CitydbUtil.showAlertWindow("OK", "Kompatibel webbläsare", 'Applikationen stöder inte webbläsaren Internet Explorer, för bästa upplevelse rekommenderas Chrome.');
+}
 
 // // Layers panel
 // var imageryLayers = cesiumViewer.imageryLayers;
