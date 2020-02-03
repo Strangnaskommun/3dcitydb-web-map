@@ -130,7 +130,7 @@ function flyToContribution(destination, duration, heading) {
         duration: duration,
         orientation: {
             heading: heading,
-            pitch: Cesium.Math.toRadians(-20.0),
+            pitch: Cesium.Math.toRadians(-50.0),
             roll: 0.0
         }
     });
@@ -149,6 +149,43 @@ function toggleContributionSettings() {
     !this.isToggled ? addNewLayer() : removeSelectedLayer();
     this.isToggled ? showHiddenObjects() : false;
     this.isToggled = !this.isToggled;
+};
+
+function showHideButtonsAlstudio() {
+    var almaButton = document.getElementById("alma");
+    var kjellgrenKaminsky = document.getElementById("kjellgren-kaminsky");
+    if(!this.on) {
+        almaButton.classList.add("showHideButton");
+        kjellgrenKaminsky.classList.add("showHideButton");
+    } else {
+        almaButton.classList.remove("showHideButton");
+        kjellgrenKaminsky.classList.remove("showHideButton");
+    }
+    this.on = !this.on;
+};
+function showHideButtonsAlma() {
+    var alstudioButton = document.getElementById("alstudio");
+    var kjellgrenKaminsky = document.getElementById("kjellgren-kaminsky");
+    if(!this.on) {
+        alstudioButton.classList.add("showHideButton");
+        kjellgrenKaminsky.classList.add("showHideButton");
+    } else {
+        alstudioButton.classList.remove("showHideButton");
+        kjellgrenKaminsky.classList.remove("showHideButton");
+    }
+    this.on = !this.on;
+};
+function showHideButtonsKjellgrenKaminsky() {
+    var alstudioButton = document.getElementById("alstudio");
+    var almaButton = document.getElementById("alma");
+    if(!this.on) {
+        almaButton.classList.add("showHideButton");
+        alstudioButton.classList.add("showHideButton");
+    } else {
+        almaButton.classList.remove("showHideButton");
+        alstudioButton.classList.remove("showHideButton");
+    }
+    this.on = !this.on;
 };
 
 var addLayerViewModel;
@@ -172,21 +209,75 @@ addLayerViewModel = {
 };
 addNewLayer();
 
-function addContributionModel() {
+function addContributionModel_alstudio() {
+    showHideButtonsAlstudio();
     addLayerViewModel = {
-        url: "",
-        name: "",
+        url: "../modeller/vattentornshojden/alstudio/alstudio_buildings_collada_MasterJSON.json",
+        name: "AL Studio",
         layerDataType: "COLLADA/KML/glTF",
         gltfVersion: "1.0",
         thematicDataUrl: "",
+        thematicDataSource: "",
+        tableType: "",
+        // googleSheetsApiKey: "",
+        // googleSheetsRanges: "",
+        // googleSheetsClientId: "",
         cityobjectsJsonUrl: "",
         minLodPixels: "1",
         maxLodPixels: "-1",
         maxSizeOfCachedTiles: 200,
         maxCountOfVisibleTiles: 200
     };
-    flyToContribution(Cesium.Cartesian3.fromDegrees(17.01839, 59.37571, 300.0), 3, -Cesium.Math.PI_OVER_TWO);
-    hideObjectsForContribution([]);
+    flyToContribution(Cesium.Cartesian3.fromDegrees(17.02196, 59.36413, 600.0), 3, 0);
+    hideObjectsForContribution(["UUID_BYGGNAD_7419745b-dcc9-4c73-ba15-b91710153678", "UUID_BYGGNAD_901", "UUID_BYGGNAD_47d2abec-1a5f-41f9-88f9-80f20cb92764"]);
+    toggleContributionSettings();
+};
+
+function addContributionModel_alma() {
+    showHideButtonsAlma();
+    addLayerViewModel = {
+        url: "../modeller/vattentornshojden/alma/alma_buildings_collada_MasterJSON.json",
+        name: "Alma",
+        layerDataType: "COLLADA/KML/glTF",
+        gltfVersion: "1.0",
+        thematicDataUrl: "",
+        thematicDataSource: "",
+        tableType: "",
+        // googleSheetsApiKey: "",
+        // googleSheetsRanges: "",
+        // googleSheetsClientId: "",
+        cityobjectsJsonUrl: "",
+        minLodPixels: "1",
+        maxLodPixels: "-1",
+        maxSizeOfCachedTiles: 200,
+        maxCountOfVisibleTiles: 200
+    };
+    flyToContribution(Cesium.Cartesian3.fromDegrees(17.02196, 59.36413, 600.0), 3, 0);
+    hideObjectsForContribution(["UUID_BYGGNAD_7419745b-dcc9-4c73-ba15-b91710153678", "UUID_BYGGNAD_9ec201d9-80cf-444d-9927-ab4b372e7726"]);
+    toggleContributionSettings();
+};
+
+function addContributionModel_kjellgrenkaminsky() {
+    showHideButtonsKjellgrenKaminsky();
+    addLayerViewModel = {
+        url: "../modeller/vattentornshojden/kjellgrenkaminsky/kjellgrenkaminsky_buildings_collada_MasterJSON.json",
+        name: "Kjellberg och Kalinsky",
+        layerDataType: "COLLADA/KML/glTF",
+        gltfVersion: "1.0",
+        thematicDataUrl: "",
+        thematicDataSource: "",
+        tableType: "",
+        // googleSheetsApiKey: "",
+        // googleSheetsRanges: "",
+        // googleSheetsClientId: "",
+        cityobjectsJsonUrl: "",
+        minLodPixels: "1",
+        maxLodPixels: "-1",
+        maxSizeOfCachedTiles: 200,
+        maxCountOfVisibleTiles: 200
+    };
+    flyToContribution(Cesium.Cartesian3.fromDegrees(17.02196, 59.36413, 600.0), 3, 0);
+    hideObjectsForContribution(["UUID_BYGGNAD_7419745b-dcc9-4c73-ba15-b91710153678", "UUID_BYGGNAD_9ec201d9-80cf-444d-9927-ab4b372e7726", "UUID_BYGGNAD_901"]);
     toggleContributionSettings();
 };
 
@@ -1267,8 +1358,8 @@ function toggleTerrainShadows() {
         if (!cesiumViewer.shadows) {
             // CitydbUtil.showAlertWindow("OK", "Switching on terrain shadows now", 'Please note that shadows for 3D models will also be switched on.',
             //     function () {
-                    toggleShadows();
-                // });
+            toggleShadows();
+            // });
         }
     }
 }
