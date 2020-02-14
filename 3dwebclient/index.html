@@ -34,7 +34,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Vattentornshöjden</title>
+    <title>Kyrkberget</title>
     <link rel="icon" type="image/png" href="../3dcitywebclient/images/favicon.ico" sizes="16x16">
     <script src="../3dcitywebclient/ThirdParty/jquery-3.3.1.min.js"></script>
     <!-- Load jquery ui datepicker FLATPICKR -->
@@ -232,6 +232,7 @@
             display: none;
         }
 
+        /* Navigation bar style */
         .container {
             display: flex;
             flex-direction: row;
@@ -242,31 +243,28 @@
             position: absolute;
             bottom: 0;
             width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .module {
-            /* background-repeat: no-repeat; */
-            /* background-color: #D3D3D3; */
-            /* margin-top: auto; */
             color: #313131;
-            /* margin: 5px 0 5px 5px; */
             padding: 10px 10px 10px 10px;
-            font-size: 30px;
+            font-size: 20px;
             font-family: 'Open Sans Condensed', sans-serif;
-            text-shadow: 2px 2px 18px rgba(0, 0, 0, 0.45);
             width: 100%;
+        }
+
+        .smallText {
+            font-size: 16px;
+            font-family: 'Open Sans Condensed', sans-serif;
+            margin: 1px;
         }
 
         .btn {
             position: relative;
             color: white;
-            line-height: 64px;
+            line-height: 30px;
             transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.1);
-            span {
-                transition: all 0.3s;
-                tranform: scale(1, 1);
-            }
         }
 
         .btn::before,
@@ -286,7 +284,7 @@
             z-index: 1;
             opacity: 0;
             background: rgba(255, 255, 255, 0.3);
-            transform: scale(0.1, 1);
+            transform: scale(0, 1);
         }
 
         .btn-one:hover::before {
@@ -309,7 +307,7 @@
         }
 
         .mapIcon {
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: white;
             opacity: 0.5;
             margin-right: 10px;
@@ -319,19 +317,131 @@
         .mapIcon:hover {
             opacity: 0.7;
         }
+
+        .homeIcon {
+            font-size: 4.5rem;
+            color: white;
+            opacity: 0.5;
+            margin-right: 5px;
+            margin-left: 10px;
+        }
+
+        .homeIcon:hover {
+            opacity: 0.7;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .module {
+                color: #313131;
+                padding: 7.5px 7.5px 7.5px 7.5px;
+                font-size: 15px;
+                font-family: 'Open Sans Condensed', sans-serif;
+                width: 100%;
+            }
+
+            .smallText {
+                font-size: 12px;
+                font-family: 'Open Sans Condensed', sans-serif;
+                margin: 1px;
+            }
+
+            .btn {
+                position: relative;
+                color: white;
+                line-height: 22.5px;
+                transition: all 0.3s;
+            }
+
+            .mapIcon {
+                font-size: 2.6rem;
+                color: white;
+                opacity: 0.5;
+                margin-right: 7.5px;
+                margin-left: 1.25px;
+            }
+
+            .homeIcon {
+                font-size: 3.4rem;
+                color: white;
+                opacity: 0.5;
+                margin-right: 3.8px;
+                margin-left: 7.5px;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            .module {
+                color: #313131;
+                padding: 5px 5px 5px 5px;
+                font-size: 10px;
+                font-family: 'Open Sans Condensed', sans-serif;
+                width: 100%;
+            }
+
+            .smallText {
+                font-size: 8px;
+                font-family: 'Open Sans Condensed', sans-serif;
+                margin: 1px;
+            }
+
+            .btn {
+                position: relative;
+                color: white;
+                line-height: 15px;
+                transition: all 0.3s;
+            }
+
+            .mapIcon {
+                font-size: 1.75rem;
+                color: white;
+                opacity: 0.5;
+                margin-right: 5px;
+                margin-left: 2.5px;
+            }
+
+            .mapIcon:hover {
+                opacity: 0.7;
+            }
+
+            .homeIcon {
+                font-size: 2.25rem;
+                color: white;
+                opacity: 0.5;
+                margin-right: 2.5px;
+                margin-left: 5px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div id="alstudio" class="module" onclick="addContributionModel_alstudio()">
-            <div class="btn btn-one"><span>AL STUDIO</span></div>
+
+    <div id="contributions" class="container">
+        <div class="homeIcon active" title="Hem" onclick="flyToContribution(Cesium.Cartesian3.fromDegrees(17.03417, 59.37169, 500.0), 3, 0)"><span class="fa fa-home"></span></div>
+        <div id="kyrkobacken" class="module" onclick="addContributionModel_kyrkobacken()">
+            <div class="btn btn-one"><span>KYRKOBACKEN</span><br>
+                <span class="smallText">där hela livet möts</span>
+            </div>
         </div>
-        <div id="kjellgren-kaminsky" class="module" onclick="addContributionModel_kjellgrenkaminsky()">
-            <div class="btn btn-one"><span>KJELLGREN KAMINSKY</span></div>
+        <div id="folier" class="module" onclick="addContributionModel_folier()">
+            <div class="btn btn-one"><span id="text">FOLIER</span><br>
+                <span class="smallText"></span>
+            </div>
         </div>
-        <div id="alma" class="module" onclick="addContributionModel_alma()">
-            <div class="btn btn-one"><span>ALMA ARKITEKTER</span></div>
+        <div id="moten" class="module" onclick="addContributionModel_storasma()">
+            <div class="btn btn-one"><span>STORA OCH SMÅ MÖTEN</span><br>
+                <span class="smallText">för stora och små</span>
+            </div>
+        </div>
+        <div id="munken" class="module" onclick="addContributionModel_munken()">
+            <div class="btn btn-one"><span>MUNKENS ÖRTAGÅRD</span><br>
+                <span class="smallText"></span>
+            </div>
+        </div>
+        <div id="muren" class="module" onclick="addContributionModel_moten()">
+            <div class="btn btn-one"><span>MÖTEN VID MUREN</span><br>
+                <span class="smallText"></span>
+            </div>
         </div>
         <div class="mapIcon" onclick="showInExternalMaps()" title="Karta"><span class="fa fa-map"></span></div>
     </div>
@@ -673,7 +783,7 @@
     </div>
 
     <!-- GPS button -->
-    <button id="gpsButton" type="button" class="cesium-button"></button>
+    <!-- <button id="gpsButton" type="button" class="cesium-button"></button> -->
 
     <!-- Splash window -->
     <div class="splashscreen-buttons">
@@ -688,6 +798,7 @@
 
 
     <script>
+
         var expanded = false;
         function showToolbox() {
             var citydb_toolbox = document.getElementById("citydb_toolbox");

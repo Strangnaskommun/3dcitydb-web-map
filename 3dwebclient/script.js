@@ -151,39 +151,84 @@ function toggleContributionSettings() {
     this.isToggled = !this.isToggled;
 };
 
-function showHideButtonsAlstudio() {
-    var almaButton = document.getElementById("alma");
-    var kjellgrenKaminsky = document.getElementById("kjellgren-kaminsky");
-    if(!this.on) {
-        almaButton.classList.add("showHideButton");
-        kjellgrenKaminsky.classList.add("showHideButton");
+var kyrkobackenButton = document.getElementById("kyrkobacken");
+var folierButton = document.getElementById("folier");
+var motenButton = document.getElementById("moten");
+var munkenButton = document.getElementById("munken");
+var murenButton = document.getElementById("muren");
+
+function showHideButtonsKyrkobacken() {
+
+    if (!this.on) {
+        folierButton.classList.add("showHideButton");
+        motenButton.classList.add("showHideButton");
+        munkenButton.classList.add("showHideButton");
+        murenButton.classList.add("showHideButton");
     } else {
-        almaButton.classList.remove("showHideButton");
-        kjellgrenKaminsky.classList.remove("showHideButton");
+        folierButton.classList.remove("showHideButton");
+        motenButton.classList.remove("showHideButton");
+        munkenButton.classList.remove("showHideButton");
+        murenButton.classList.remove("showHideButton");
     }
     this.on = !this.on;
 };
-function showHideButtonsAlma() {
-    var alstudioButton = document.getElementById("alstudio");
-    var kjellgrenKaminsky = document.getElementById("kjellgren-kaminsky");
-    if(!this.on) {
-        alstudioButton.classList.add("showHideButton");
-        kjellgrenKaminsky.classList.add("showHideButton");
+function showHideButtonsFolier() {
+    if (!this.on) {        
+        kyrkobackenButton.classList.add("showHideButton");
+        motenButton.classList.add("showHideButton");
+        munkenButton.classList.add("showHideButton");
+        murenButton.classList.add("showHideButton");
     } else {
-        alstudioButton.classList.remove("showHideButton");
-        kjellgrenKaminsky.classList.remove("showHideButton");
+        kyrkobackenButton.classList.remove("showHideButton");
+        motenButton.classList.remove("showHideButton");
+        munkenButton.classList.remove("showHideButton");
+        murenButton.classList.remove("showHideButton");
     }
     this.on = !this.on;
 };
-function showHideButtonsKjellgrenKaminsky() {
-    var alstudioButton = document.getElementById("alstudio");
-    var almaButton = document.getElementById("alma");
-    if(!this.on) {
-        almaButton.classList.add("showHideButton");
-        alstudioButton.classList.add("showHideButton");
+function showHideButtonsMoten() {
+    if (!this.on) {
+        kyrkobackenButton.classList.add("showHideButton");
+        folierButton.classList.add("showHideButton");
+        munkenButton.classList.add("showHideButton");
+        murenButton.classList.add("showHideButton");
     } else {
-        almaButton.classList.remove("showHideButton");
-        alstudioButton.classList.remove("showHideButton");
+        kyrkobackenButton.classList.remove("showHideButton");
+        folierButton.classList.remove("showHideButton");
+        munkenButton.classList.remove("showHideButton");
+        murenButton.classList.remove("showHideButton");
+    }
+    this.on = !this.on;
+};
+function showHideButtonsMunken() {
+    if (!this.on) {
+        // visibleText.classList.remove("showHideButton")
+        kyrkobackenButton.classList.add("showHideButton");
+        motenButton.classList.add("showHideButton");
+        folierButton.classList.add("showHideButton");
+        murenButton.classList.add("showHideButton");
+    } else {
+        // visibleText.classList.add("showHideButton")
+        kyrkobackenButton.classList.remove("showHideButton");
+        motenButton.classList.remove("showHideButton");
+        folierButton.classList.remove("showHideButton");
+        murenButton.classList.remove("showHideButton");
+    }
+    this.on = !this.on;
+};
+function showHideButtonsMuren() {
+    if (!this.on) {
+        // visibleText.classList.remove("showHideButton")
+        kyrkobackenButton.classList.add("showHideButton");
+        motenButton.classList.add("showHideButton");
+        munkenButton.classList.add("showHideButton");
+        folierButton.classList.add("showHideButton");
+    } else {
+        // visibleText.classList.add("showHideButton")
+        kyrkobackenButton.classList.remove("showHideButton");
+        motenButton.classList.remove("showHideButton");
+        munkenButton.classList.remove("showHideButton");
+        folierButton.classList.remove("showHideButton");
     }
     this.on = !this.on;
 };
@@ -208,12 +253,13 @@ addLayerViewModel = {
     maxCountOfVisibleTiles: 200
 };
 addNewLayer();
+hideObjectsForContribution(["UUID_BYGGNAD_2002"]);
 
-function addContributionModel_alstudio() {
-    showHideButtonsAlstudio();
+function addContributionModel_kyrkobacken() {
+    showHideButtonsKyrkobacken();
     addLayerViewModel = {
-        url: "../modeller/vattentornshojden/alstudio/alstudio_buildings_collada_MasterJSON.json",
-        name: "AL Studio",
+        url: "../modeller/kyrkberget/kyrkobacken/kyrkobacken_collada_MasterJSON.json",
+        name: "Kyrkobacken - där hela livet möts",
         layerDataType: "COLLADA/KML/glTF",
         gltfVersion: "1.0",
         thematicDataUrl: "",
@@ -228,16 +274,16 @@ function addContributionModel_alstudio() {
         maxSizeOfCachedTiles: 200,
         maxCountOfVisibleTiles: 200
     };
-    flyToContribution(Cesium.Cartesian3.fromDegrees(17.02196, 59.36413, 600.0), 3, 0);
-    hideObjectsForContribution(["UUID_BYGGNAD_7419745b-dcc9-4c73-ba15-b91710153678", "UUID_BYGGNAD_901", "UUID_BYGGNAD_47d2abec-1a5f-41f9-88f9-80f20cb92764"]);
+    // flyToContribution(Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 500.0));
+    hideObjectsForContribution(["UUID_BYGGNAD_1001", "UUID_BYGGNAD_2002", "UUID_BYGGNAD_292525af-14e4-41e6-aa9c-499567a5a714", "UUID_BYGGNAD_209c73db-626a-45d9-87ff-815d34480213"]);
     toggleContributionSettings();
 };
 
-function addContributionModel_alma() {
-    showHideButtonsAlma();
+function addContributionModel_folier() {
+    showHideButtonsFolier();
     addLayerViewModel = {
-        url: "../modeller/vattentornshojden/alma/alma_buildings_collada_MasterJSON.json",
-        name: "Alma",
+        url: "../modeller/kyrkberget/folier/folier_collada_MasterJSON.json",
+        name: "Folier",
         layerDataType: "COLLADA/KML/glTF",
         gltfVersion: "1.0",
         thematicDataUrl: "",
@@ -252,16 +298,16 @@ function addContributionModel_alma() {
         maxSizeOfCachedTiles: 200,
         maxCountOfVisibleTiles: 200
     };
-    flyToContribution(Cesium.Cartesian3.fromDegrees(17.02196, 59.36413, 600.0), 3, 0);
-    hideObjectsForContribution(["UUID_BYGGNAD_7419745b-dcc9-4c73-ba15-b91710153678", "UUID_BYGGNAD_9ec201d9-80cf-444d-9927-ab4b372e7726"]);
+    // flyToContribution(Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 500.0));
+    hideObjectsForContribution(["UUID_BYGGNAD_1001", "UUID_BYGGNAD_2002"]);
     toggleContributionSettings();
 };
 
-function addContributionModel_kjellgrenkaminsky() {
-    showHideButtonsKjellgrenKaminsky();
+function addContributionModel_storasma() {
+    showHideButtonsMoten();
     addLayerViewModel = {
-        url: "../modeller/vattentornshojden/kjellgrenkaminsky/kjellgrenkaminsky_buildings_collada_MasterJSON.json",
-        name: "Kjellberg och Kalinsky",
+        url: "../modeller/kyrkberget/storasma/storasma_collada_MasterJSON.json",
+        name: "Stora och små möten - möten för stora och små",
         layerDataType: "COLLADA/KML/glTF",
         gltfVersion: "1.0",
         thematicDataUrl: "",
@@ -276,8 +322,54 @@ function addContributionModel_kjellgrenkaminsky() {
         maxSizeOfCachedTiles: 200,
         maxCountOfVisibleTiles: 200
     };
-    flyToContribution(Cesium.Cartesian3.fromDegrees(17.02196, 59.36413, 600.0), 3, 0);
-    hideObjectsForContribution(["UUID_BYGGNAD_7419745b-dcc9-4c73-ba15-b91710153678", "UUID_BYGGNAD_9ec201d9-80cf-444d-9927-ab4b372e7726", "UUID_BYGGNAD_901"]);
+    // flyToContribution(Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 500.0));
+    hideObjectsForContribution(["UUID_BYGGNAD_1001", "UUID_BYGGNAD_2002", "UUID_BYGGNAD_8f94022c-7445-436f-8f5a-afaad6b32179"]);
+    toggleContributionSettings();
+};
+function addContributionModel_munken() {
+    showHideButtonsMunken();
+    addLayerViewModel = {
+        url: "../modeller/kyrkberget/munken/munken_collada_MasterJSON.json",
+        name: "Munkens örtagård",
+        layerDataType: "COLLADA/KML/glTF",
+        gltfVersion: "1.0",
+        thematicDataUrl: "",
+        thematicDataSource: "",
+        tableType: "",
+        // googleSheetsApiKey: "",
+        // googleSheetsRanges: "",
+        // googleSheetsClientId: "",
+        cityobjectsJsonUrl: "",
+        minLodPixels: "1",
+        maxLodPixels: "-1",
+        maxSizeOfCachedTiles: 200,
+        maxCountOfVisibleTiles: 200
+    };
+    // flyToContribution(Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 500.0));
+    hideObjectsForContribution(["UUID_BYGGNAD_1001", "UUID_BYGGNAD_2002", "UUID_BYGGNAD_8f94022c-7445-436f-8f5a-afaad6b32179"]);
+    toggleContributionSettings();
+};
+function addContributionModel_moten() {
+    showHideButtonsMuren();
+    addLayerViewModel = {
+        url: "../modeller/kyrkberget/moten/moten_collada_MasterJSON.json",
+        name: "Möten vid muren",
+        layerDataType: "COLLADA/KML/glTF",
+        gltfVersion: "1.0",
+        thematicDataUrl: "",
+        thematicDataSource: "",
+        tableType: "",
+        // googleSheetsApiKey: "",
+        // googleSheetsRanges: "",
+        // googleSheetsClientId: "",
+        cityobjectsJsonUrl: "",
+        minLodPixels: "1",
+        maxLodPixels: "-1",
+        maxSizeOfCachedTiles: 200,
+        maxCountOfVisibleTiles: 200
+    };
+    // flyToContribution(Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 500.0));
+    hideObjectsForContribution(["UUID_BYGGNAD_1001", "UUID_BYGGNAD_2002", "UUID_BYGGNAD_8f94022c-7445-436f-8f5a-afaad6b32179", "UUID_BYGGNAD_6c3139e1-0b5d-4119-a740-5c28f659f0f2", "UUID_BYGGNAD_209c73db-626a-45d9-87ff-815d34480213", "UUID_BYGGNAD_292525af-14e4-41e6-aa9c-499567a5a714", "UUID_BYGGNAD_209c73db-626a-45d9-87ff-815d34480213", "UUID_BYGGNAD_e89479d3-6653-47c3-823b-1e77ca44bc7d"]);
     toggleContributionSettings();
 };
 
@@ -1366,7 +1458,7 @@ function toggleTerrainShadows() {
 
 function createInfoTable(gmlid, cesiumEntity, citydbLayer) {
     var thematicDataUrl = citydbLayer.thematicDataUrl;
-    cesiumEntity.description = "Hämtar objektinformation...";
+    cesiumEntity.description = "";
 
     citydbLayer.dataSourceController.fetchData(gmlid, function (kvp) {
         if (!kvp) {
@@ -1488,7 +1580,7 @@ function showInExternalMaps() {
     var centerCoords = proj4(epsg3010, [lon, lat]);
 
     // Go directly to Strängnäskartan
-    var mapLink = 'https://kartor.strangnas.se/extern/#layers=orto025/v/1/s/0,mask_strangnas/v/1/s/0&center=' + centerCoords + '&zoom=12&map=extern';
+    var mapLink = 'https://kartor.strangnas.se/stadsmodell-kyrkberget/#layers=orto025/v/1/s/0,mask_strangnas/v/1/s/0&center=' + centerCoords + '&zoom=12&map=index';
 
     // switch (selectedIndex) {
     //     case 1:
@@ -1560,130 +1652,10 @@ function thematicDataSourceAndTableTypeDropdownOnchange() {
 }
 
 // Mobile layouts and functionalities
-var mobileController = new MobileController();
+// var mobileController = new MobileController();
 
 var userAgentString = navigator.userAgent;
 var IExplorerAgent = userAgentString.indexOf("MSIE") > -1 || userAgentString.indexOf("rv:") > -1;
 if (IExplorerAgent) {
     CitydbUtil.showAlertWindow("OK", "Kompatibel webbläsare", 'Applikationen stöder inte webbläsaren Internet Explorer, för bästa upplevelse rekommenderas Chrome.');
 }
-
-// // Layers panel
-// var imageryLayers = cesiumViewer.imageryLayers;
-
-// var viewModel = {
-//     layers: [],
-//     baseLayers: [],
-//     upLayer: null,
-//     downLayer: null,
-//     selectedLayer: null,
-//     isSelectableLayer: function (layer) {
-//         return this.baseLayers.indexOf(layer) >= 0;
-//     },
-//     raise: function (layer, index) {
-//         imageryLayers.raise(layer);
-//         viewModel.upLayer = layer;
-//         viewModel.downLayer = viewModel.layers[Math.max(0, index - 1)];
-//         updateLayerList();
-//         window.setTimeout(function () { viewModel.upLayer = viewModel.downLayer = null; }, 10);
-//     },
-//     lower: function (layer, index) {
-//         imageryLayers.lower(layer);
-//         viewModel.upLayer = viewModel.layers[Math.min(viewModel.layers.length - 1, index + 1)];
-//         viewModel.downLayer = layer;
-//         updateLayerList();
-//         window.setTimeout(function () { viewModel.upLayer = viewModel.downLayer = null; }, 10);
-//     },
-//     canRaise: function (layerIndex) {
-//         return layerIndex > 0;
-//     },
-//     canLower: function (layerIndex) {
-//         return layerIndex >= 0 && layerIndex < imageryLayers.length - 1;
-//     }
-// };
-
-// var baseLayers = viewModel.baseLayers;
-
-// Cesium.knockout.track(viewModel);
-
-// var gridOptions = {
-//     cells: 8,
-//     color: Cesium.Color.BLACK,
-//     backgroundColor: Cesium.Color.TRANSPARENT,
-//     glowColor: Cesium.Color.TRANSPARENT
-// }
-// var byggnaderOptions = {
-//     url: 'https://karta.strangnas.se/geoserver/strangnas/wms',
-//     layers: 'byggnader_2017_20190619',
-//     parameters: {
-//         transparent: 'true',
-//         format: 'image/png'
-//     },
-// }
-
-// function setupLayers() {
-//     addBaseLayerOption(
-//         'Bakgrundskarta');
-//     addAdditionalLayerOption(
-//         'Grid',
-//         new Cesium.GridImageryProvider(gridOptions), 1.0, false);
-//     // addAdditionalLayerOption(
-//     //     'Byggnader',
-//     //     new Cesium.WebMapServiceImageryProvider(byggnaderOptions), 1.0, false);
-// }
-
-// function addBaseLayerOption(name, imageryProvider) {
-//     var layer;
-//     if (typeof imageryProvider === 'undefined') {
-//         layer = imageryLayers.get(0);
-//         viewModel.selectedLayer = layer;
-//     } else {
-//         layer = new Cesium.ImageryLayer(imageryProvider);
-//     }
-
-//     layer.name = name;
-//     baseLayers.push(layer);
-// }
-
-// function addAdditionalLayerOption(name, imageryProvider, alpha, show) {
-//     var layer = imageryLayers.addImageryProvider(imageryProvider);
-//     layer.alpha = Cesium.defaultValue(alpha, 1);
-//     layer.show = Cesium.defaultValue(show, true);
-//     layer.name = name;
-//     Cesium.knockout.track(layer, ['alpha', 'show', 'name']);
-// }
-
-// function updateLayerList() {
-//     var numLayers = imageryLayers.length;
-//     viewModel.layers.splice(0, viewModel.layers.length);
-//     for (var i = numLayers - 1; i >= 0; --i) {
-//         viewModel.layers.push(imageryLayers.get(i));
-//     }
-// }
-
-// setupLayers();
-// updateLayerList();
-
-// //Bind the viewModel to the DOM elements of the UI that call for it.
-// var toolbar = document.getElementById('toolbar');
-// Cesium.knockout.applyBindings(viewModel, toolbar);
-
-// Cesium.knockout.getObservable(viewModel, 'selectedLayer').subscribe(function (baseLayer) {
-//     // Handle changes to the drop-down base layer selector.
-//     var activeLayerIndex = 0;
-//     var numLayers = viewModel.layers.length;
-//     for (var i = 0; i < numLayers; ++i) {
-//         if (viewModel.isSelectableLayer(viewModel.layers[i])) {
-//             activeLayerIndex = i;
-//             break;
-//         }
-//     }
-//     var activeLayer = viewModel.layers[activeLayerIndex];
-//     var show = activeLayer.show;
-//     var alpha = activeLayer.alpha;
-//     imageryLayers.remove(activeLayer, false);
-//     imageryLayers.add(baseLayer, numLayers - activeLayerIndex - 1);
-//     baseLayer.show = show;
-//     baseLayer.alpha = alpha;
-//     updateLayerList();
-// });
