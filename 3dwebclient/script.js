@@ -157,7 +157,7 @@ addLayerViewModel = {
     url: "../modeller/primar/primar_collada_MasterJSON.json",
     name: "Strängnäs stadsmodell",
     layerDataType: "COLLADA/KML/glTF",
-    gltfVersion: "1.0",
+    gltfVersion: "2.0",
     thematicDataUrl: "",
     thematicDataSource: "",
     tableType: "",
