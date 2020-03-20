@@ -108,14 +108,14 @@ adjustIonFeatures();
 // No need for navigation as for now
 // navigationInitialization('cesiumContainer', cesiumViewer);
 
+
 // Init camera view @ Strängnäs stad
 var startpositionCamera = cesiumViewer.camera;
 startpositionCamera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(17.03365, 59.37570, 1000.0),
+    destination: Cesium.Cartesian3.fromDegrees(17.02528, 59.38704, 400.0),
     orientation: {
-        // heading : Cesium.Math.toRadians(0.0),
-        // pitch: Cesium.Math.toRadians(-45.0),
-        // roll: 0.0
+        heading : Cesium.Math.toRadians(175.0),
+        pitch : Cesium.Math.toRadians(-20.0)
     }
 });
 
@@ -154,7 +154,7 @@ function toggleContributionSettings() {
 var addLayerViewModel;
 
 addLayerViewModel = {
-    url: "../modeller/primarmodell/stadsmodell_collada_MasterJSON.json",
+    url: "../modeller/primar/primar_collada_MasterJSON.json",
     name: "Strängnäs stadsmodell",
     layerDataType: "COLLADA/KML/glTF",
     gltfVersion: "1.0",
@@ -165,7 +165,7 @@ addLayerViewModel = {
     // googleSheetsRanges: "",
     // googleSheetsClientId: "",
     cityobjectsJsonUrl: "",
-    minLodPixels: "1",
+    minLodPixels: "220",
     maxLodPixels: "-1",
     maxSizeOfCachedTiles: 200,
     maxCountOfVisibleTiles: 200
@@ -880,10 +880,10 @@ function generateLink() {
         projectLink = projectLink + '&' + basemap;
     }
 
-    var terrain = terrainToQuery();
-    if (terrain != null) {
-        projectLink = projectLink + '&' + terrain;
-    }
+    // var terrain = terrainToQuery();
+    // if (terrain != null) {
+    //     projectLink = projectLink + '&' + terrain;
+    // }
 
     var splashWindow = splashWindowToQuery();
     if (splashWindow != null) {
