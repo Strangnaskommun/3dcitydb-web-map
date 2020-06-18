@@ -52,7 +52,7 @@ Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 var cesiumViewerOptions = {
     baseLayerPicker: true,
     terrainProvider: new Cesium.CesiumTerrainProvider({
-        url: Cesium.IonResource.fromAssetId(47325)
+        url: Cesium.IonResource.fromAssetId(113751)
     }),
     timeline: false,
     animation: false,
