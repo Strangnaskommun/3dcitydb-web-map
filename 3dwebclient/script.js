@@ -1252,10 +1252,20 @@ function printCurrentview() {
     imageWin.close();
 }
 
+
+function toggleAllShadows() {
+    cesiumViewer.shadows = !cesiumViewer.shadows;
+    if (!cesiumViewer.shadows) {
+        cesiumViewer.terrainShadows = Cesium.ShadowMode.DISABLED;
+    } else {
+        cesiumViewer.terrainShadows = Cesium.ShadowMode.ENABLED;
+    }
+}
+
 function toggleShadows() {
     cesiumViewer.shadows = !cesiumViewer.shadows;
     if (!cesiumViewer.shadows) {
-        cesiumViewer.terrainShadows = Cesium.ShadowMode.ENABLED;
+        cesiumViewer.terrainShadows = Cesium.ShadowMode.DISABLED;
     }
 }
 
@@ -1265,10 +1275,10 @@ function toggleTerrainShadows() {
     } else {
         cesiumViewer.terrainShadows = Cesium.ShadowMode.ENABLED;
         if (!cesiumViewer.shadows) {
-            // CitydbUtil.showAlertWindow("OK", "Switching on terrain shadows now", 'Please note that shadows for 3D models will also be switched on.',
-            //     function () {
-                    toggleShadows();
-                // });
+            CitydbUtil.showAlertWindow("OK", "Switching on terrain shadows now", 'Please note that shadows for 3D models will also be switched on.',
+                    function () {
+                        toggleShadows();
+                    });
         }
     }
 }
