@@ -158,9 +158,9 @@ addLayerViewModel = {
     name: "Strängnäs stadsmodell",
     layerDataType: "COLLADA/KML/glTF",
     gltfVersion: "2.0",
-    thematicDataUrl: "",
-    thematicDataSource: "",
-    tableType: "",
+    thematicDataUrl: "https://kartservice.strangnas.se/service/lm/getbuilding",
+    thematicDataSource: "PostgreSQL",
+    tableType: "Horizontal",
     // googleSheetsApiKey: "",
     // googleSheetsRanges: "",
     // googleSheetsClientId: "",
@@ -1281,10 +1281,30 @@ function createInfoTable(gmlid, cesiumEntity, citydbLayer) {
         if (!kvp) {
             cesiumEntity.description = 'Ingen information funnen';
         } else {
-            console.log(kvp);
             var html = '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
             for (var key in kvp) {
-                html += '<tr><td>' + key + '</td><td>' + kvp[key] + '</td></tr>';
+                if (typeof kvp[key] !== 'object') {
+                    html += '<tr><td>' + key.toUpperCase() + '</td><td style="width:50%">' + kvp[key] + '</td></tr>';
+                }
+                if (Array.isArray(kvp[key])) {
+                    kvp[key].forEach(el => {
+                        var elArray = Object.entries(el)
+                        html += '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
+                        html += '<th style="width:50%">' + key.toUpperCase(); + '</th>';
+                        elArray.forEach(arr => {
+                            html += '<tr><td>' + Object.values(arr)[0] + '</td><td style="width:50%">' + Object.values(arr)[1] + '</td></tr>';
+                        });
+                        html += '</tbody></table>';
+                    });
+                } else if (typeof kvp[key] === 'object') {
+                    var elArray = Object.entries(kvp[key])
+                    html += '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
+                    html += '<th style="width:50%">' + key.toUpperCase(); + '</th>';
+                    elArray.forEach(arr => {
+                        html += '<tr><td>' + Object.values(arr)[0] + '</td><td style="width:50%">' + Object.values(arr)[1] + '</td></tr>';
+                    });
+                    html += '</tbody></table>';
+                }
             }
             html += '</tbody></table>';
 
