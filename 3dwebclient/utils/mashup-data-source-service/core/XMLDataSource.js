@@ -11,10 +11,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var SQLDataSource = /** @class */ (function (_super) {
-    __extends(SQLDataSource, _super);
-    function SQLDataSource(signInController, options) {
+var XMLDataSource = /** @class */ (function (_super) {
+    __extends(XMLDataSource, _super);
+    function XMLDataSource(signInController, options) {
         return _super.call(this, signInController, options) || this;
     }
-    return SQLDataSource;
+    return XMLDataSource;
 }(DataSource));

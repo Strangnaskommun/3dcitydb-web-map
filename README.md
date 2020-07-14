@@ -3,6 +3,7 @@
 
 News
 -------
+#### Version [v1.8.3](https://github.com/3dcitydb/3dcitydb-web-map/releases/tag/v1.8.3) released (*May 15, 2020*)
 #### Version [v1.8.2](https://github.com/3dcitydb/3dcitydb-web-map/releases/tag/v1.8.2) released (*Jan 17, 2020*)
 #### Version [v1.8.1](https://github.com/3dcitydb/3dcitydb-web-map/releases/tag/v1.8.1) released (*Dec 2, 2019*)
 In preparation of Google Fusion Tables being shut down by Google: Extend the 3DCityDB Web Client to support further data sources such as Google Spreadsheets (using Google Sheets API v4) and directly from PostgreSQL (using PostgREST API).
@@ -45,11 +46,9 @@ The 3DCityDb-Web-Map-Client is licensed under the [Apache License, Version 2.0](
 
 Latest release
 --------------
-The latest stable release of the 3DCityDB-Web-Map-Client is `1.7.1`.
-
 All releases are available from the [releases section](https://github.com/3dcitydb/3dcitydb-web-map/releases).
 
-For convenient use, there is an official [web link](https://www.3dcitydb.org/3dcitydb-web-map/1.7.1/3dwebclient/index.html) available that can be called to directly run the 3DCityDb-Web-Map-Client on your web browser. 
+For convenient use, there is an official [web link](https://www.3dcitydb.org/3dcitydb-web-map/latest/3dwebclient/index.html) available that can be called to directly run the 3DCityDb-Web-Map-Client on your web browser. 
 
 
 System requirements

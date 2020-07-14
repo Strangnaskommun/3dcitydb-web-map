@@ -1,10 +1,81 @@
 # Change Log
 
-### 1.8.3 - Active [[Demo Link]](https://www.3dcitydb.org/3dcitydb-web-map/1.8.3/3dwebclient/index.html)
+### 1.8.4 - Active [[Demo Link]](https://www.3dcitydb.org/3dcitydb-web-map/1.8.4/3dwebclient/index.html)
+
+##### FIXES
+
+* Fix a bug that prevented loading of Cesium 3D Tiles,
+see [`9966228`](https://github.com/3dcitydb/3dcitydb-web-map/commit/9966228394acc86c51578e40e322c9c699617e6a).
+
+### 1.8.3 - Released [[Demo Link]](https://www.3dcitydb.org/3dcitydb-web-map/1.8.3/3dwebclient/index.html)
+
+##### NEW
+* Added support for retrieving and displaying thematic datasource from KML documents themselves 
+(see [`d0e82ad`](https://github.com/3dcitydb/3dcitydb-web-map/commit/d0e82adb8ec9dceb4a77ba7bdc2a7b48e81dab67)).
+Note that:
+  + The option ``> Thematic Data Source`` in the main toolbox must be set to `KML documents`;
+  + If Cesium is used to retrieve thematic data from KML documents, only ``Data`` of `ExtendedData` is allowed.
+  ``SchemaData`` or custom data are simply ignored by Cesium, see [here](https://cesium.com/docs/cesiumjs-ref-doc/KmlFeatureData.html);
+  + An example of a KML document with thematic data:
+  ```xml
+  ...
+  <Placemark>
+    ...
+    <ExtendedData>
+       <Data name="dataName">
+          <displayName></displayName>
+          <value></value>
+       </Data>
+    </ExtendedData>
+  </Placemark>  
+  ```
+  + If the ``Data`` elements do not have `displayName`, the attribute `name` shall be used as label instead.
+
+* Added support for loading KML/COLLADA/glTF layers via proxy (see [`c736ba7`](https://github.com/3dcitydb/3dcitydb-web-map/commit/c736ba7dc56c251f46e055a4d924cd71fe35c268) and [`4894ca4`](https://github.com/3dcitydb/3dcitydb-web-map/commit/4894ca4075a447874bc1003c785f47db661a6b56)):
+  + This can be toggled in the main toolbox while adding new layer;
+  + This shall be stored in the shared URLs as parameter `layerProxy=<true|false>`;
+  + For backward compatibility, shared URLs without this parameter shall receive the default value `false`.
+  + It is not recommended to load large datasets via proxy, e.g. Cesium 3D Tiles;
+  + Proxy only works for web client hosted in one of the following domains: `http(s)://(www.)3dcitydb.[org|net|de]`;
+  + Users have to ensure the resource URL and the web client's URL have the same protocol HTTP/HTTPS.
+
+* Added support for clamping KML models to ground (see [`c736ba7`](https://github.com/3dcitydb/3dcitydb-web-map/commit/c736ba7dc56c251f46e055a4d924cd71fe35c268) and [`f64372c`](https://github.com/3dcitydb/3dcitydb-web-map/commit/f64372c02408e734d07c01ee93c55c12c1117bcf)):
+  + This can be toggled in the main toolbox while adding new layer;
+  + This shall be stored in the shared URLs as parameter `layerClampToGround=<true|false>`;
+  + For backward compatibility, shared URLs without this parameter shall receive the default value `true`.
+
+* It is now possible to access own private/non-public Google Spreadsheets using OAuth, see [`082145c`](https://github.com/3dcitydb/3dcitydb-web-map/commit/082145c73bf68c6f29614581b4f09f703d627bde).
+The following steps explain how to enable OAuth for your project and use it in the Web Client 
+(this is not the requirement of the web client, but rather a standard procedure when using OAuth):
+  1. Make sure you really have read/write access to the table;
+  1. Register your project using [Google Developer Console](https://console.developers.google.com/);
+  2. Search and activate [Google Sheets API](https://console.developers.google.com/apis/library) for your project;
+  3. Create and copy your client ID from the [credentials page](https://console.developers.google.com/apis/credentials);
+  4. Insert the trusted [redirect URIs](https://console.developers.google.com/apis/credentials/oauthclient), 
+  or the URIs in which the web client is running. For example if you are using the latest web client from our 3DCityDB server,
+  then you should insert the following URI: 
+  ``https://www.3dcitydb.org/3dcitydb-web-map/latest/3dwebclient/index.html``
+  5. Paste your client ID in the web client's URL using the parameter `googleClientId`, such as
+  ``https://www.3dcitydb.org/3dcitydb-web-map/latest/3dwebclient/index.html?googleClientId=<YOUR_CLIENT_ID>``
+     + You can then log into Google by clicking the button marked with a key symbol, 
+     which can be found in the top right area of the screen;
+     + When logged in, you can click the button again to log out;
+     + If the parameter `googleClientId` does not exist in the client URL, then this button shall not be displayed 
+     (backward compatible to earlier versions of the web client).
+  6. (Optional) You can share your project as usual by clicking the button `Generate Scene Link`.
+  You need to stay logged in to attach your client ID in the project share link. 
+  If you wish to not include your client ID in the project share link, then simply log out beforehand,
+  see [`bd99b17`](https://github.com/3dcitydb/3dcitydb-web-map/commit/bd99b176894618f1b8623c2de1f95e6555711b5c).
+
+* The web client now supports both `.gltf` and binary `.glb` files. 
+It automatically detects for each individual object whether a `.gltf` or a `.glb` is present and visualize accordingly,
+i.e. the web client can visualize a list of files mixed with `.gltf` and `.glb`, 
+see[`737b4a0`](https://github.com/3dcitydb/3dcitydb-web-map/commit/737b4a017af5a0433c08df4d2e593a1e61152446). 
 
 ### 1.8.2 - Released [[Demo Link]](https://www.3dcitydb.org/3dcitydb-web-map/1.8.2/3dwebclient/index.html)
 
 ##### FIXES
+* Fixed a bug that prevented calendar `flatpickr` from displaying correctly, see [`942d9f1`](https://github.com/3dcitydb/3dcitydb-web-map/commit/942d9f1e28646bed6c0fba04e62cf4e6efdbdbf8).
 * Fixed querying data sources from multiple layers, see [`69fce7b`](https://github.com/3dcitydb/3dcitydb-web-map/commit/69fce7b2a6c0568ad9fbf183ccc87599aa5d6147).
 * Fixed loading of thematic data sources in Cesium 3D Tiles, see [`08bc00d`](https://github.com/3dcitydb/3dcitydb-web-map/commit/08bc00da66510939ac7811a8b8c750f961eeeb8e).
 
@@ -40,8 +111,7 @@ parsing project URLs, see [`05e692d`](https://github.com/3dcitydb/3dcitydb-web-m
         | gmlid1  | value1  | value2  | value3  | value4  |
         | gmlid2  | value1  | value2  | value3  | value4  |
       
-       
-    + Vertical: each object attribute is stored in one row consisting of three columns `ID`, 
+    + **Vertical**: each object attribute is stored in one row consisting of three columns `ID`, 
     `Attribute` and `Value`, which means an ID may occur in multiple rows in the table.
     
       **Note**: A vertical table must contain exactly 3 columns in this exact order: `gmlid`, `attribute` and `value`.
@@ -58,6 +128,21 @@ parsing project URLs, see [`05e692d`](https://github.com/3dcitydb/3dcitydb-web-m
         | gmlid2  | attribute2  | value2  |
         | gmlid2  | attribute3  | value3  |
         | gmlid2  | attribute4  | value4  |
+        
+    + The response from PostgREST service is encoded in JSON with the following structure:
+    Both the horizontal and vertical mode consist of an array of records marked by the `[ ... ]`. 
+    Each record represents a line in the table, where:
+    
+        + Each record in vertical mode only has exactly 3 elements: `gmlid`, attribute name and attribute value. The `gmlids` here can be duplicated in other records, but the combination of these 3 elements must be unique.
+           ```
+           [
+              { gmlid : "id1", value_name : "value_name", value : "value" },
+              { gmlid : "id2", value_name : "value_name", value : "value" },
+              ...
+           ]
+           ```
+
+        + On the other hand, each record in the horizontal mode can have more than 2 elements, but the first one must always be `gmlid` and this must be unique for each record.
 
 ##### UPDATES
 * Added support for `thematicDataSource` in URLs generated by `Generate Scene Link` as well as parsing project URLs, see[`85afb36`](https://github.com/3dcitydb/3dcitydb-web-map/commit/85afb36a840e044e03b95ade41ee6776840387a4).
