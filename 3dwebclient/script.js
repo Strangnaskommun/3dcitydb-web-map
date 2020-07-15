@@ -114,8 +114,8 @@ var startpositionCamera = cesiumViewer.camera;
 startpositionCamera.setView({
     destination: Cesium.Cartesian3.fromDegrees(17.02528, 59.38704, 400.0),
     orientation: {
-        heading : Cesium.Math.toRadians(175.0),
-        pitch : Cesium.Math.toRadians(-20.0)
+        heading: Cesium.Math.toRadians(175.0),
+        pitch: Cesium.Math.toRadians(-20.0)
     }
 });
 
@@ -157,6 +157,8 @@ addLayerViewModel = {
     url: "../modeller/primar/primar_collada_MasterJSON.json",
     name: "Strängnäs stadsmodell",
     layerDataType: "COLLADA/KML/glTF",
+    layerProxy: false,
+    layerClampToGround: true,
     gltfVersion: "2.0",
     thematicDataUrl: "https://kartservice.strangnas.se/service/lm/getbuilding",
     thematicDataSource: "PostgreSQL",
@@ -362,9 +364,11 @@ function initClient() {
             clockElement._flatpickr.open();
         }
     });
-    cesiumViewer.timeline.addEventListener("click", function() {
-        clockElement._flatpickr.setDate(new Date(Cesium.JulianDate.toDate(cesiumViewer.clock.currentTime).toUTCString().substr(0, 25)));
-    })
+    if (cesiumViewer.timeline) {
+        cesiumViewer.timeline.addEventListener("click", function () {
+            clockElement._flatpickr.setDate(new Date(Cesium.JulianDate.toDate(cesiumViewer.clock.currentTime).toUTCString().substr(0, 25)));
+        });
+    }
 
     // // Bring the cesium navigation help popup above the compass
     // var cesiumNavHelp = document.getElementsByClassName("cesium-navigation-help")[0];
@@ -1296,9 +1300,9 @@ function toggleTerrainShadows() {
         cesiumViewer.terrainShadows = Cesium.ShadowMode.ENABLED;
         if (!cesiumViewer.shadows) {
             CitydbUtil.showAlertWindow("OK", "Switching on terrain shadows now", 'Please note that shadows for 3D models will also be switched on.',
-                    function () {
-                        toggleShadows();
-                    });
+                function () {
+                    toggleShadows();
+                });
         }
     }
 }
@@ -1317,11 +1321,11 @@ function createInfoTable(gmlid, cesiumEntity, citydbLayer) {
                     html += '<tr><td>' + key.toUpperCase() + '</td><td style="width:50%">' + kvp[key] + '</td></tr>';
                 }
                 if (Array.isArray(kvp[key])) {
-                    kvp[key].forEach(el => {
+                    kvp[key].forEach(function(el) {
                         var elArray = Object.entries(el)
                         html += '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
                         html += '<th style="width:50%">' + key.toUpperCase(); + '</th>';
-                        elArray.forEach(arr => {
+                        elArray.forEach(function(arr) {
                             html += '<tr><td>' + Object.values(arr)[0] + '</td><td style="width:50%">' + Object.values(arr)[1] + '</td></tr>';
                         });
                         html += '</tbody></table>';
@@ -1330,7 +1334,7 @@ function createInfoTable(gmlid, cesiumEntity, citydbLayer) {
                     var elArray = Object.entries(kvp[key])
                     html += '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
                     html += '<th style="width:50%">' + key.toUpperCase(); + '</th>';
-                    elArray.forEach(arr => {
+                    elArray.forEach(function(arr) {
                         html += '<tr><td>' + Object.values(arr)[0] + '</td><td style="width:50%">' + Object.values(arr)[1] + '</td></tr>';
                     });
                     html += '</tbody></table>';
