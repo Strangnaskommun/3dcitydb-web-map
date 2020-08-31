@@ -112,9 +112,9 @@ adjustIonFeatures();
 // Init camera view @ Strängnäs stad
 var startpositionCamera = cesiumViewer.camera;
 startpositionCamera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(17.02528, 59.38704, 400.0),
+    destination: Cesium.Cartesian3.fromDegrees(17.09648, 59.24767, 300.0),
     orientation: {
-        heading: Cesium.Math.toRadians(175.0),
+        heading: Cesium.Math.toRadians(0),
         pitch: Cesium.Math.toRadians(-20.0)
     }
 });
@@ -157,8 +157,6 @@ addLayerViewModel = {
     url: "../modeller/primar/primar_collada_MasterJSON.json",
     name: "Strängnäs stadsmodell",
     layerDataType: "COLLADA/KML/glTF",
-    layerProxy: false,
-    layerClampToGround: true,
     gltfVersion: "2.0",
     thematicDataUrl: "https://kartservice.strangnas.se/service/lm/getbuilding",
     thematicDataSource: "PostgreSQL",
@@ -167,7 +165,7 @@ addLayerViewModel = {
     // googleSheetsRanges: "",
     // googleSheetsClientId: "",
     cityobjectsJsonUrl: "",
-    minLodPixels: "220",
+    minLodPixels: "180",
     maxLodPixels: "-1",
     maxSizeOfCachedTiles: 200,
     maxCountOfVisibleTiles: 200
@@ -176,19 +174,20 @@ addNewLayer();
 
 function addContributionModel() {
     addLayerViewModel = {
-        url: "",
-        name: "",
+        url: "../modeller/joren1/joren1_collada_MasterJSON.json",
+        name: "Jören 1",
         layerDataType: "COLLADA/KML/glTF",
-        gltfVersion: "1.0",
+        gltfVersion: "2.0",
         thematicDataUrl: "",
+        thematicDataSource: "",
+        tableType: "",
         cityobjectsJsonUrl: "",
-        minLodPixels: "1",
+        minLodPixels: "180",
         maxLodPixels: "-1",
         maxSizeOfCachedTiles: 200,
         maxCountOfVisibleTiles: 200
     };
-    flyToContribution(Cesium.Cartesian3.fromDegrees(17.01839, 59.37571, 300.0), 3, -Cesium.Math.PI_OVER_TWO);
-    hideObjectsForContribution([]);
+    hideObjectsForContribution(["UUID_BYGGNAD_f3fcb7f5-3687-4213-a84e-50f659ff1d26"]);
     toggleContributionSettings();
 };
 
@@ -226,12 +225,13 @@ Cesium.knockout.applyBindings(addSplashWindowModel, document.getElementById('cit
 
 /*---------------------------------  Load Configurations and Layers  ----------------------------------------*/
 
-initClient();
+intiClient();
 
 // Store clicked entities
 var clickedEntities = {};
 
-function initClient() {
+var clockElementClicked = false;
+function intiClient() {
     // adjust cesium navigation help popup for splash window
     // insertSplashInfoHelp();
     // read splash window from url
@@ -340,7 +340,7 @@ function initClient() {
     var clockElement = document.getElementsByClassName("citydb_flatpickr")[0];
     flatpickr(clockElement, {
         enableTime: true,
-        defaultDate: new Date(new Date().toUTCString().substr(0, 25)), // force flatpickr to use UTC
+        defaultDate: Cesium.JulianDate.toDate(cesiumViewer.clock.currentTime),
         enableSeconds: false,
         disableMobile: true
     });
@@ -358,17 +358,11 @@ function initClient() {
         cesiumViewer.timeline.resize();
     });
     clockElement.addEventListener("click", function () {
-        if (clockElement._flatpickr.isOpen) {
+        if (clockElementClicked) {
             clockElement._flatpickr.close();
-        } else {
-            clockElement._flatpickr.open();
         }
+        clockElementClicked = !clockElementClicked;
     });
-    if (cesiumViewer.timeline) {
-        cesiumViewer.timeline.addEventListener("click", function () {
-            clockElement._flatpickr.setDate(new Date(Cesium.JulianDate.toDate(cesiumViewer.clock.currentTime).toUTCString().substr(0, 25)));
-        });
-    }
 
     // // Bring the cesium navigation help popup above the compass
     // var cesiumNavHelp = document.getElementsByClassName("cesium-navigation-help")[0];
@@ -396,8 +390,6 @@ function observeActiveLayer() {
         addLayerViewModel.url = selectedLayer.url;
         addLayerViewModel.name = selectedLayer.name;
         addLayerViewModel.layerDataType = selectedLayer.layerDataType;
-        addLayerViewModel.layerProxy = selectedLayer.layerProxy;
-        addLayerViewModel.layerClampToGround = selectedLayer.layerClampToGround;
         addLayerViewModel.gltfVersion = selectedLayer.gltfVersion;
         addLayerViewModel.thematicDataUrl = selectedLayer.thematicDataUrl;
         addLayerViewModel.thematicDataSource = selectedLayer.thematicDataSource;
@@ -502,8 +494,6 @@ function getLayersFromUrl() {
             url: layerConfig.url,
             name: layerConfig.name,
             layerDataType: Cesium.defaultValue(layerConfig.layerDataType, "COLLADA/KML/glTF"),
-            layerProxy: Cesium.defined(layerConfig.layerProxy) ? layerConfig.layerProxy === "true" : false,
-            layerClampToGround: Cesium.defined(layerConfig.layerProxy) ? layerConfig.layerClampToGround === "true" : true,
             gltfVersion: Cesium.defaultValue(layerConfig.gltfVersion, "2.0"),
             thematicDataUrl: Cesium.defaultValue(layerConfig.spreadsheetUrl, ""),
             thematicDataSource: Cesium.defaultValue(layerConfig.thematicDataSource, "GoogleSheets"),
@@ -589,8 +579,6 @@ function saveLayerSettings() {
     applySaving('url', activeLayer);
     applySaving('name', activeLayer);
     applySaving('layerDataType', activeLayer);
-    applySaving('layerProxy', activeLayer);
-    applySaving('layerClampToGround', activeLayer);
     applySaving('gltfVersion', activeLayer);
     applySaving('thematicDataUrl', activeLayer);
     applySaving('thematicDataSource', activeLayer);
@@ -753,10 +741,8 @@ function addEventListeners(layer) {
     }
 
     layer.registerEventHandler("CLICK", function (object) {
-        var thematicDataSourceDropdown = document.getElementById("thematicDataSourceDropdown");
-        var selectedThematicDataSource = thematicDataSourceDropdown.options[thematicDataSourceDropdown.selectedIndex].value;
         var res = auxClickEventListener(object);
-        createInfoTable(selectedThematicDataSource === "KML" ? res[1]._id : res[0], res[1], layer);
+        createInfoTable(res[0], res[1], layer);
     });
 
     layer.registerEventHandler("CTRLCLICK", function (object) {
@@ -905,11 +891,6 @@ function generateLink() {
         projectLink = projectLink + '&' + splashWindow;
     }
 
-    // only export client ID if user is logged in
-    if ((signInController && signInController.clientID && signInController.isSignIn())) {
-        projectLink = projectLink + '&googleClientId=' + (signInController.clientID ? signInController.clientID : googleClientId);
-    }
-
     return projectLink;
 }
 
@@ -941,8 +922,6 @@ function layersToQuery() {
             url: layer.url,
             name: layer.name,
             layerDataType: layer.layerDataType,
-            layerProxy: layer.layerProxy,
-            layerClampToGround: layer.layerClampToGround,
             gltfVersion: layer.gltfVersion,
             active: layer.active,
             spreadsheetUrl: layer.thematicDataUrl,
@@ -1133,8 +1112,6 @@ function addNewLayer() {
         url: addLayerViewModel.url.trim(),
         name: addLayerViewModel.name.trim(),
         layerDataType: addLayerViewModel.layerDataType.trim(),
-        layerProxy: (addLayerViewModel.layerProxy === true),
-        layerClampToGround: (addLayerViewModel.layerClampToGround === true),
         gltfVersion: addLayerViewModel.gltfVersion.trim(),
         thematicDataUrl: addLayerViewModel.thematicDataUrl.trim(),
         thematicDataSource: addLayerViewModel.thematicDataSource.trim(),
@@ -1321,11 +1298,11 @@ function createInfoTable(gmlid, cesiumEntity, citydbLayer) {
                     html += '<tr><td>' + key.toUpperCase() + '</td><td style="width:50%">' + kvp[key] + '</td></tr>';
                 }
                 if (Array.isArray(kvp[key])) {
-                    kvp[key].forEach(function(el) {
+                    kvp[key].forEach(el => {
                         var elArray = Object.entries(el)
                         html += '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
                         html += '<th style="width:50%">' + key.toUpperCase(); + '</th>';
-                        elArray.forEach(function(arr) {
+                        elArray.forEach(arr => {
                             html += '<tr><td>' + Object.values(arr)[0] + '</td><td style="width:50%">' + Object.values(arr)[1] + '</td></tr>';
                         });
                         html += '</tbody></table>';
@@ -1334,7 +1311,7 @@ function createInfoTable(gmlid, cesiumEntity, citydbLayer) {
                     var elArray = Object.entries(kvp[key])
                     html += '<table class="cesium-infoBox-defaultTable" style="font-size:10.5pt"><tbody>';
                     html += '<th style="width:50%">' + key.toUpperCase(); + '</th>';
-                    elArray.forEach(function(arr) {
+                    elArray.forEach(arr => {
                         html += '<tr><td>' + Object.values(arr)[0] + '</td><td style="width:50%">' + Object.values(arr)[1] + '</td></tr>';
                     });
                     html += '</tbody></table>';
@@ -1480,10 +1457,8 @@ function layerDataTypeDropdownOnchange() {
     var layerDataTypeDropdown = document.getElementById("layerDataTypeDropdown");
     if (layerDataTypeDropdown.options[layerDataTypeDropdown.selectedIndex].value !== "COLLADA/KML/glTF") {
         document.getElementById("gltfVersionDropdownRow").style.display = "none";
-        document.getElementById("layerProxyAndClampToGround").style.display = "none";
     } else {
         document.getElementById("gltfVersionDropdownRow").style.display = "";
-        document.getElementById("layerProxyAndClampToGround").style.display = "";
     }
     addLayerViewModel["layerDataType"] = layerDataTypeDropdown.options[layerDataTypeDropdown.selectedIndex].value;
 }
@@ -1514,25 +1489,14 @@ function thematicDataSourceAndTableTypeDropdownOnchange() {
         // provider: "",
         uri: addLayerViewModel.thematicDataUrl,
         tableType: selectedTableType,
-        thirdPartyHandler: {
-            type: "Cesium",
-            handler: webMap._activeLayer ? webMap._activeLayer._citydbKmlDataSource : undefined
-        },
         // ranges: addLayerViewModel.googleSheetsRanges,
         // apiKey: addLayerViewModel.googleSheetsApiKey,
         // clientId: addLayerViewModel.googleSheetsClientId
-        clientId: googleClientId ? googleClientId : ""
     };
     // Mashup Data Source Service
     if (webMap && webMap._activeLayer) {
-        webMap._activeLayer.dataSourceController = new DataSourceController(selectedThematicDataSource, signInController, options);
+        webMap._activeLayer.dataSourceController = new DataSourceController(selectedThematicDataSource, options);
     }
-}
-
-// Sign in utilities
-var googleClientId = CitydbUtil.parse_query_string('googleClientId', window.location.href);
-if (googleClientId) {
-    var signInController = new SigninController(googleClientId);
 }
 
 // Mobile layouts and functionalities
