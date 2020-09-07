@@ -171,6 +171,7 @@ addLayerViewModel = {
     maxCountOfVisibleTiles: 200
 };
 addNewLayer();
+hideObjectsForContribution(["UUID_BYGGNAD_f3fcb7f5-3687-4213-a84e-50f659ff1d26"]);
 
 function addContributionModel() {
     addLayerViewModel = {
@@ -182,7 +183,7 @@ function addContributionModel() {
         thematicDataSource: "",
         tableType: "",
         cityobjectsJsonUrl: "",
-        minLodPixels: "180",
+        minLodPixels: "1",
         maxLodPixels: "-1",
         maxSizeOfCachedTiles: 200,
         maxCountOfVisibleTiles: 200
@@ -190,6 +191,7 @@ function addContributionModel() {
     hideObjectsForContribution(["UUID_BYGGNAD_f3fcb7f5-3687-4213-a84e-50f659ff1d26"]);
     toggleContributionSettings();
 };
+addContributionModel();
 
 Cesium.knockout.applyBindings(addLayerViewModel, document.getElementById('citydb_addlayerpanel'));
 Cesium.knockout.track(addLayerViewModel);
