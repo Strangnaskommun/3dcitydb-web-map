@@ -191,10 +191,10 @@ function showHideButtonsKjellgrenKaminsky() {
 var addLayerViewModel;
 
 addLayerViewModel = {
-    url: "../modeller/primarmodell/stadsmodell_collada_MasterJSON.json",
+    url: "../modeller/primar/primar_collada_MasterJSON.json",
     name: "Strängnäs stadsmodell",
     layerDataType: "COLLADA/KML/glTF",
-    gltfVersion: "1.0",
+    gltfVersion: "2.0",
     thematicDataUrl: "",
     thematicDataSource: "",
     tableType: "",
@@ -202,7 +202,7 @@ addLayerViewModel = {
     // googleSheetsRanges: "",
     // googleSheetsClientId: "",
     cityobjectsJsonUrl: "",
-    minLodPixels: "1",
+    minLodPixels: "180",
     maxLodPixels: "-1",
     maxSizeOfCachedTiles: 200,
     maxCountOfVisibleTiles: 200
