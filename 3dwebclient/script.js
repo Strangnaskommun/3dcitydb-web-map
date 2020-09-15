@@ -112,7 +112,7 @@ adjustIonFeatures();
 // Init camera view @ Strängnäs stad
 var startpositionCamera = cesiumViewer.camera;
 startpositionCamera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(17.09648, 59.24767, 300.0),
+    destination: Cesium.Cartesian3.fromDegrees(17.09648, 59.25165, 100.0),
     orientation: {
         heading: Cesium.Math.toRadians(0),
         pitch: Cesium.Math.toRadians(-20.0)
@@ -179,9 +179,9 @@ function addContributionModel() {
         name: "Jören 1",
         layerDataType: "COLLADA/KML/glTF",
         gltfVersion: "2.0",
-        thematicDataUrl: "",
-        thematicDataSource: "",
-        tableType: "",
+        thematicDataUrl: "https://kartservice.strangnas.se/service/lm/getbuilding",
+        thematicDataSource: "PostgreSQL",
+        tableType: "Horizontal",
         cityobjectsJsonUrl: "",
         minLodPixels: "1",
         maxLodPixels: "-1",
